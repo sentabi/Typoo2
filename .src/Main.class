@@ -1,0 +1,905 @@
+' Gambas class file
+
+' Typoo 2.0.1 [Code Name : Jenni] ----------------------------------------------------------
+' Small software to learn fast typing
+' Licensed under GPL GNU General Public License Version 2
+' (c) 2011 - 2013 I Gede Kusuma Negara
+'
+' Developers: 
+' * Project Founder : I Gede Kusuma Negara <archit3x@archlinux.us>
+' * Programmer : Christian Kurniawan Ginting <saa7.go@gmail.com>
+' * Artwork Designer : Hamzah Fahrudin <karangdesaku@yahoo.co.id>
+' Coded on Gambas 3.34 in Archlinux 32 bit
+'
+' 
+' We hope this software can be usefull and let's increase your typing speed..!
+' 
+' 
+' Thanks to:
+' * GAMBAS Developers
+' * Teman-teman komunitas ubuntu-indonesia.com (#ubuntu-indonesia@freenode)
+' * Teman-teman komunitas Blankon terutama pak de Gus Pur atas semangatnya ;)
+' * Teman-teman forum linux kaskus.co.id
+' ------------------------------------------------------------------------------------------
+
+
+
+
+'untuk ascii, keyboard dan gambar tangan ------------------------------------------------------------------------------------------------
+Public NButton As Object
+Public NHand As Object
+Public input_ascii As String
+Public tAscii1 As String          'daftar ascii huruf kecil
+Public tAscii2 As String          'daftar ascii huruf besar dan +shift
+Public tKeyboard As String        'daftar name button keyboard
+Public tHand As String            'daftar name gambar tangan
+Public tColor As String           'daftar warna keyboard
+Public tInfoText As String        'daftar info teks pada tangan
+Public tAscii1_arr As String[]    'array ascii huruf kecil
+Public tAscii2_arr As String[]    'array ascii huruf besar dan +shift
+Public tKeyboard_arr As String[]  'array name button keyboard
+Public tHand_arr As String[]      'array name gambar tangan
+Public tColor_arr As String[]     'array warna keyboard
+Public tInfoText_arr As String[]  'array info teks pada tangan
+Public tAscii_pos As Integer      'posisi ascii dalam array ascii
+Public tKeyboard_pos As Integer   'posisi keyboard tombol, kiri=0 kanan=1 | dalam teori pengetikan keyboard dibagi menjadi 2 bagian
+Public tLastTutorialIndex As Integer
+
+
+Public Tutorial_Teks As String
+
+Public cChar As String            'huruf aktif yang harus diketik
+Public tChar_Pos As Integer       'poisi huruf sekarang
+Public nText As String            'teks yang diketik
+ 
+Public tTeks_mahir As String          'teks papan mahir
+Public tLastDir As String             'direktori terakhir yang dibuka user
+Public tFilePath As String            'file yang dibuka user
+
+Public RecentFiles As New String[]
+Public RecentMenus As New Object[]
+
+Public start_mahir_type As Boolean      'mulai ngetik
+Public tWrong_Type_Count As Integer     'Jumlah ketikan yang salah
+Public tMark_as_Wrong As Boolean        'penanda pernah salah ketik
+Public tChar_Typed_Count As Integer     'jumlah huruf yang sudah terketik
+Public tWrong_Type As Boolean           'penanda salah ketik
+Public tTyping_Time As Integer          'lama waktu pengetikan
+Public tStart_Time_Typing As Integer    'waktu mulai pengetikan
+
+Public tKeyFunction As String
+Public tKeyFunction_arr As String[]
+Public tBoardPos As Integer = 0
+
+Public Sub Form_Open()
+  Me.Center
+
+  Main_Container.ScrollBar = False
+  Main_Container.Border = False
+
+  Prepare_Keyboard_Array  
+  Prepare_Tutorial_List
+  
+  Hand_Container.Border = False
+  
+  Me.Height = 469
+  Me.Width = 721
+  Main_Container.Width = 707
+  'Type_Here.SetFocus
+  'h:469
+  'w:721  :707
+  '
+  '
+  LoadConfig
+  
+End
+
+'Persiapkan Daftar tutorial
+Public Sub Prepare_Tutorial_List()
+  Dim i As Integer
+  
+  With List_Tutorial
+    For i = 1 To 22
+      .Add("Latihan " & i, i - 1)
+    Next
+  End With
+
+  'otomatis tutorial pertama terpilih
+  tLastTutorialIndex = 0
+  List_Tutorial.Index = tLastTutorialIndex
+  List_Tutorial_Click
+  
+End
+
+Public Sub Prepare_Keyboard_Array()
+  
+  'Daftar ascii keyboard huruf kecil  
+  tAscii1 = "96/113/97/122/49/50/119/115/120/51/101/100/99/52/114/102/118/53/116/103/98/54/" &
+            "55/121/104/110/117/106/109/56/105/107/44/57/111/108/46/48/112/59/47/45/91/39/61/93/92/32/13"
+  
+  'Daftar ascii keyboard huruf besar
+  tAscii2 = "126/81/65/90/33/64/87/83/88/35/69/68/67/36/82/70/86/37/84/71/66/94/" &
+            "38/89/72/78/85/74/77/42/73/75/60/40/79/76/62/41/80/58/63/95/123/34/43/125/124"
+  
+  'Daftar nama tombol virtual keyboard
+  tKeyboard = "b1/b16/b30/b43/b2/b3/b17/b31/b44/b4/b18/b32/b45/b5/b19/b33/b46/b6/b20/b34/b47/b7/" &
+              "b8/b21/b35/b48/b22/b36/b49/b9/b23/b37/b50/b10/b24/b38/b51/b11/b25/b39/b52/b12/b26/b40/b13/b27/b28/b57/b41"
+  
+  'Daftar gambar tangan
+  tHand = "l1/l1/l1/l1/l1/l2/l2/l2/l2/l3/l3/l3/l3/l4/l4/l4/l4/l4/l4/l4/l4/l4/" &
+          "r2/r2/r2/r2/r2/r2/r2/r3/r3/r3/r3/r4/r4/r4/r4/r5/r5/r5/r5/r5/r5/r5/r5/r5/r5/r1/r5"
+  
+  'Daftar warna keyboard
+  'kuning, hijau, orange, biru, merah
+  tColor = "k/k/k/k/k/h/h/h/h/o/o/o/o/b/b/b/b/b/b/b/b/b/" &
+           "b/b/b/b/b/b/b/o/o/o/o/h/h/h/h/k/k/k/k/k/k/k/k/k/k" 
+           
+  'Daftar info teks pada tangan
+  tInfoText = "t1/t1/t1/t1/t1/t2/t2/t2/t2/t3/t3/t3/t3/t4/t4/t4/t4/t4/t4/t4/t4/t4/" &
+              "t6/t6/t6/t6/t6/t6/t6/t7/t7/t7/t7/t8/t8/t8/t8/t9/t9/t9/t9/t9/t9/t9/t9/t9/t9/t5/t9"
+  
+  tKeyFunction = "16777216/16777264/16777265/16777266/16777267/16777268/16777269/16777270/16777271/16777272/16777273/16777219/" &
+                 "16777274/16777275/16777224/16777222/16777223/16777232/16777238/16777239/16777233/16777236/16777237/16777234/16777235/16777217"
+  'mButton = "b1/b2/b3/b4/b5/b6/b7/b8/b9/b10/b11/b12/b13/b14/b15/b16/b17/b18/b19/b20/b21/b22/b23/b24/b25/b26/b27/b28/b29/b30/" & 
+  '          "b31/b32/b33/b34/b35/b36/b37/b38/b39/b40/b41/b42/b43/b44/b45/b46/b47/b48/b49/b50/b51/b52/b53/b55/b55/b56/b57/b58/b59/b60"
+
+  
+  'Siapkan array ascii, tombol keyboard dan gambar tangan
+  tAscii1_arr = Split(tAscii1, "/")  'jumlah tombol bagian kiri 22
+  tAscii2_arr = Split(tAscii2, "/")
+  tKeyboard_arr = Split(tKeyboard, "/")
+  tHand_arr = Split(tHand, "/")
+  tColor_arr = Split(tColor, "/")
+  tInfoText_arr = Split(tInfoText, "/")
+  tKeyFunction_arr = Split(tKeyFunction, "/")
+  
+  
+  'siapkan array recent menu
+  RecentMenus.Add(menu_recent1)
+  RecentMenus.Add(menu_recent2)
+  RecentMenus.Add(menu_recent3)
+  RecentMenus.Add(menu_recent4)
+  RecentMenus.Add(menu_recent5)
+  
+  RecentMenus[0] = New Menu(menu_recents) As "Recents"
+  RecentMenus[1] = New Menu(menu_recents) As "Recents"
+  RecentMenus[2] = New Menu(menu_recents) As "Recents"
+  RecentMenus[3] = New Menu(menu_recents) As "Recents"
+  RecentMenus[4] = New Menu(menu_recents) As "Recents"
+  
+  
+End
+
+Public Sub Keyboard_Map(tChar As String)
+  
+ 'Normalkan warna tombol keyboard
+  If Colorized_Keyboard.Value = False Then
+    Reset_Keyboard_Color(0)
+  Else
+    Reset_Keyboard_Color(1)
+  Endif
+  
+  'periska tombol yang dipencet user
+  tAscii_pos = -1
+  tKeyboard_pos = -1
+
+  input_ascii = Asc(tChar)
+  tAscii_pos = tAscii1_arr.Find(input_ascii)    'periksa apakah merupakan huruf kecil
+  If tAscii_pos = -1 Then
+    tAscii_pos = tAscii2_arr.Find(input_ascii)  'periksa apakah merupakan huruf besar
+    If tAscii_pos <> -1 Then
+      If tAscii_pos <= 22 Then                  'periksa apakah bagian kiri atau kanan keyboard (pendeteksian shift)
+        tKeyboard_pos = 1                       'posisi tombol ada di kiri maka shift kanan yang harus dipencet
+      Else
+        tKeyboard_pos = 0
+      Endif
+    Endif
+  Endif
+  
+  'warnai keyboard 
+  If tAscii_pos <> -1 Then
+    For Each NButton In Keyboard_Container.Children
+      If NButton.Name = tKeyboard_arr[tAscii_pos] Then
+        NButton.Background = Color.red 
+        NButton.Foreground = Color.White
+        Select Case tKeyboard_pos           'warna tombol shift kiri dan kanan
+          Case 0
+            b42.Foreground = Color.White
+            b42.Background = Color.Red
+          Case 1
+            b53.Foreground = Color.White
+            b53.Background = Color.Red
+        End Select
+      Endif
+    Next
+  Endif
+
+  'Normalkan gambar tangan
+  Reset_Hand_Pic
+  
+  'Tampilkan petunjuk tangan
+  If tAscii_pos <> -1 Then
+    For Each NHand In Hand_Container.Children
+      If NHand.Name = tHand_arr[tAscii_pos] Then
+        NHand.Visible = True
+        Select Case tKeyboard_pos           'salah satu tangan memencet tombol shift
+          Case 0
+            l1.Visible = True
+          Case 1
+            r5.Visible = True
+        End Select
+      Endif
+    Next
+  Endif
+  
+  'Tampilkan info teks pada tangan
+    If tAscii_pos <> -1 Then
+    For Each NHand In Hand_Container.Children
+      If NHand.Name = tInfoText_arr[tAscii_pos] Then
+        NHand.Visible = True
+        Select Case input_ascii
+          Case 13
+            t9.Caption = "Enter"
+            t9.Visible = True
+          Case 32
+            t5.Caption = "Space"
+            t5.Visible = True
+          Case Else
+             NHand.Caption = cChar
+             NHand.width = 25
+             NHand.height = 25
+        End Select
+        Select Case tKeyboard_pos           'salah satu tangan memencet tombol shift
+          Case 0
+            t1.Caption = "Shift"
+            t1.Visible = True
+          Case 1
+            t9.Caption = "Shift"
+            t9.Visible = True
+        End Select
+      Endif
+    Next
+  Endif
+  
+End
+
+
+Public Sub Reset_Keyboard_Color(tMode As Integer)
+Dim i As Integer
+
+  If tMode = 0 Then   'keyboard tanpa warna
+    For Each NButton In Keyboard_Container.Children
+        NButton.background = Color.Default
+        NButton.foreground = Color.Default
+    Next
+  Else                'keyboard berwarna
+    For i = 0 To tColor_arr.Max
+      For Each NButton In Keyboard_Container.Children
+        If NButton.Name = tKeyboard_arr[i] Then
+          NButton.background = Keyboard_Color(tColor_arr[i])
+          NButton.foreground = Color.Default
+        Endif
+      Next
+    Next
+  Endif
+  'normalkan tombol shift, spasi dan enter
+  b42.Foreground = Color.Default
+  b42.Background = Color.Default
+  b53.Foreground = Color.Default
+  b53.Background = Color.Default
+  b57.Foreground = Color.Default
+  b57.Background = Color.Default
+  b41.Foreground = Color.Default
+  b41.Background = Color.Default
+End
+
+Private Function Keyboard_Color(tWarna As String) As Integer
+Dim tColor_Result As Integer
+
+  Select Case tWarna
+    Case "k"
+      tColor_Result = &HFFFF7F&
+    Case "h"
+      tColor_Result = &H7FFF7F&
+    Case "o"
+      tColor_Result = &HFFBF7F&
+    Case "b"
+      tColor_Result = &H7FBFFF&
+  End Select
+  Return tColor_Result
+End
+
+
+Public Sub Reset_Hand_Pic()
+  
+  For Each NHand In Hand_Container.Children
+    NHand.Visible = False
+  Next
+  pic_tangan.Visible = True
+
+End
+
+
+Public Sub Type_Here_KeyPress()
+Dim cAscii As Integer
+Dim Correct_Type As Boolean
+
+  cAscii = Asc(cChar)
+    
+  tAscii_pos = -1
+  tKeyboard_pos = -1
+  
+  tAscii_pos = tAscii1_arr.Find(cAscii)    'periksa apakah merupakan huruf kecil
+  If tAscii_pos = -1 Then
+    tAscii_pos = tAscii2_arr.Find(cAscii)  'periksa apakah merupakan huruf besar
+    If tAscii_pos <> -1 Then
+      If tAscii_pos <= 22 Then             'periksa apakah bagian kiri atau kanan keyboard (pendeteksian shift)
+        tKeyboard_pos = 1
+      Else
+        tKeyboard_pos = 0
+      Endif
+    Endif
+  Endif
+
+  If tAscii_pos <> -1 Then
+    If tKeyboard_pos <> -1 Then
+      'user harus ngetik huruf besar
+      If Key.Code = Key[cChar] And If Key.Shift Then        'Gambas belum membedakan key code huruf A dengan a  :(
+        'ketikan benar
+        Correct_Type = True
+      Else
+        'ketikan salah        
+        Correct_Type = False
+      Endif
+    Else
+      'user harus ngetik huruf kecil
+      If Key.Code = Key[cChar] And If Key.Shift Then
+        'ketikan salah
+        Correct_Type = False
+      Else If Key.Code = Key[cChar] Then
+        Correct_Type = True
+      Else If Key.code = 16777220 And If cAscii = 13 Then     'key.code ENTER bukan 13 :(
+        Correct_Type = True
+      Else
+        'ketikan salah
+        Correct_Type = False
+      Endif
+    Endif
+  Endif
+  
+  If Correct_Type = True Then
+    If tChar_Pos < Len(nText) Then                            'lanjutkan ke huruf berikutnya
+      tChar_Pos = tChar_Pos + 1
+    Else
+      If List_Tutorial.Index < List_Tutorial.Count Then
+        List_Tutorial.Index = List_Tutorial.Index + 1         'lanjutkan ke tutorial berikutnya
+      Else
+        List_Tutorial.Index = 0                               'tutorial habis, kembali ke tutorial pertama
+      Endif
+      List_Tutorial_Click
+    Endif
+  Else
+    tChar_Pos = tChar_Pos                                     'salah ketik, huruf yang diketik belum berubah
+  Endif
+
+  With Board
+    'warnai huruf yang sudah diketik dengan warna abu-abu
+    .Select(tChar_Pos - 2, 1)
+    .Format.Color = Color.gray
+    .Format.Font.Underline = False
+    .Unselect
+    
+    'warnai huruf yang akan diketik dengan warna orange
+    .Select(tChar_Pos - 1, 1)
+    .Format.Color = Color.Orange
+    .Format.Font.Underline = True
+    .Unselect
+  End With
+
+  cChar = Mid(nText, tChar_Pos, 1)                            'lanjutkan pembacaan huruf
+  Keyboard_Map(cChar)
+  
+End 
+
+Public Sub List_Tutorial_Click()
+
+  Select Case List_Tutorial.Index
+    Case 0
+      Tutorial_Teks = "aaa aaa aaa aaa aaa aaa aaa aaa aaa aaa" & gb.Cr & "sss sss sss sss sss sss sss sss sss sss" & gb.Cr & "ddd ddd ddd ddd ddd ddd ddd ddd ddd ddd"
+    Case 1
+      Tutorial_Teks = "asd asd asd asd asd asd asd asd asd asd" & gb.Cr & "fff fff fff fff fff fff fff fff fff fff" & gb.Cr & "asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf asdf"
+    Case 2
+      Tutorial_Teks = ";;; ;;; ;;; ;;; ;;; ;;; ;;; ;;; ;;; ;;;" & gb.Cr & "lll lll lll lll lll lll lll lll lll lll" & gb.Cr & "kkk kkk kkk kkk kkk kkk kkk kkk kkk kkk"
+    Case 3
+      Tutorial_Teks = ";lk ;lk ;lk ;lk ;lk ;lk ;lk ;lk ;lk ;lk" & gb.Cr & "jjj jjj jjj jjj jjj jjj jjj jjj jjj jjj" & gb.Cr & "jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl; jkl;"
+    Case 4
+      Tutorial_Teks = "asf asf asf asf asf asf asf asf asf asf" & gb.Cr & "das das das das das das das das das das" & gb.Cr & "fda fda fda fda fda fds fds fds fds fds"
+    Case 5
+      Tutorial_Teks = "jl; jl; jl; jl; jl; jl; jl; jl; jl; jl;" & gb.Cr & "lkj lkj lkj lkj lkj ;kj ;kj ;kj ;kj ;kj" & gb.Cr & "klj klj klj klj klj k;j k;j k;j k;j k;j"
+    Case 6
+      Tutorial_Teks = "ggg ggg ggg ggg ggg ggg ggg ggg ggg ggg" & gb.Cr & "gag gag gag gag gag gas gas gas gas gas" & gb.Cr & "gaf gaf gaf gaf gaf gds gds gds gds gds"
+    Case 7
+      Tutorial_Teks = "hhh hhh hhh hhh hhh hhh hhh hhh hhh hhh" & gb.Cr & "hjl hjl hjl hjl hjl hlk hlk hlk hlk hlk" & gb.Cr & "hk; hk; hk; hk; hk; hk; hj; hj; hj; hj;"
+    Case 8
+      Tutorial_Teks = "dak dak dak dak dak fal fal fal fal fal" & gb.Cr & "kas kas kas kas kas kaf kaf kaf kaf kaf" & gb.Cr & "lds lds lds lds lds jfl jfl jfl jfl jfl"
+    Case 9
+      Tutorial_Teks = "gls gls gls gls gls has has has has has" & gb.Cr & "had had had had had gfk gfk gfk gfk gfk" & gb.Cr & "hld hld hld hld hld hsf hsf hsf hsf hsf"
+    Case 10
+      Tutorial_Teks = "asdfg hjkl; asdfg hjkl; asdfg hjkl; asdfg hjkl;" & gb.Cr & "ahsjdkflg; ahsjdkflg; ahsjdkflg; ahsjdkflg; ahsjdkflg;"
+    Case 11
+      Tutorial_Teks = "qaz qaz qaz qaz qaz qaz qaz qaz qaz qaz" & gb.Cr & "wsx wsx wsx wsx wsx wsx wsx wsx wsx wsx" & gb.Cr & "edc edc edc edc edc edc edc edc edc edc"
+    Case 12
+      Tutorial_Teks = "rfv rfv rfv rfv rfv rfv rfv rfv rfv rfv" & gb.Cr & "tgb tgb tgb tgb tgb tgb tgb tgb tgb tgb" & gb.Cr & "aqaz aqaz aqaz aqaz aqaz aqaz aqaz aqaz"
+    Case 13
+      Tutorial_Teks = "swsx swsx swsx swsx swsx swsx swsx swsx" & gb.Cr & "dedc dedc dedc dedc dedc dedc dedc dedc" & gb.Cr & "frfv frfv frfv frfv frfv frfv frfv frfv"
+    Case 14
+      Tutorial_Teks = "tgtb tgtb tgtb tgtb tgtb tgtb tgtb tgtb" & gb.Cr & "qwer qwer qwer qwer qwer qwer qwer qwer" & gb.Cr & "zxcv zxcv zxcv zxcv zxcv zxcv zxcv zxcv"
+    Case 15
+      Tutorial_Teks = "fax fax fax fax fax vas vas vas vas vas" & gb.Cr & "gfx gfx gfx gfx gfx cwe cwe cwe cwe cwe" & gb.Cr & "tas tas tas tas tas bez bez bez bez bez"
+    Case 16
+      Tutorial_Teks = "ujm ujm ujm ujm ujm ujm ujm ujm ujm ujm" & gb.Cr & "ik, ik, ik, ik, ik, ik, ik, ik, ik, ik," & gb.Cr & "ol. ol. ol. ol. ol. ol. ol. ol. ol. ol."
+    Case 17
+      Tutorial_Teks = "p;/ p;/ p;/ p;/ p;/ p;/ p;/ p;/ p;/ p;/" & gb.Cr & "yhn yhn yhn yhn yhn yhn yhn yhn yhn yhn" & gb.Cr & "jujm jujm jujm jujm jujm jujm jujm jujm"
+    Case 18
+      Tutorial_Teks = "kik, kik, kik, kik, kik, kik, kik, kik," & gb.Cr & "lol. lol. lol. lol. lol. lol. lol. lol." & gb.Cr & ";p;/ ;p;/ ;p;/ ;p;/ ;p;/ ;p;/ ;p;/ ;p;/"
+    Case 19
+      Tutorial_Teks = "jin jin jin jin jin kil kil kil kil kil" & gb.Cr & "yih yih yih yih yih lop lop lop lop lop" & gb.Cr & "min min min min kuh kuh kuh kuh kuh kuh"
+    Case 20
+      Tutorial_Teks = "pui pui pui pui pui hop hop hop hop hop" & gb.Cr & "po. po. po. po. po. jl, jl, jl, jl, jl," & gb.Cr & "un; un; un; un; un; hk; hk; hk; hk; hk;"
+    Case 21
+      Tutorial_Teks = "abcdefg hijklm nopqrstu vwxzyz" & gb.Cr & "abcdefg hijklm nopqrstu vwxzyz" & gb.Cr & "abcdefg hijklm nopqrstu vwxzyz"
+  End Select
+  '"" & gb.Cr & "" & gb.Cr & ""
+  Prepare_Tutorial_Board(Tutorial_Teks)
+
+End
+
+Public Sub Prepare_Tutorial_Board(tTeks As String)
+
+  tChar_Pos = 1
+  nText = tTeks
+  cChar = Mid(tTeks, tChar_Pos, 1)
+  
+  Board.Text = tTeks
+  
+  With Board
+    .SelectAll
+    .Format.Color = Color.Black
+    .Format.Font.Underline = False
+    .Format.Alignment = Align.Center
+    .Refresh
+    
+    .Select(tChar_Pos - 1, 1)
+    .Format.Color = Color.Orange
+    .Format.Font.Underline = True
+    .Unselect
+  End With
+  
+  'Type_Here.SetFocus
+  Keyboard_Map(cChar)
+  
+End
+
+Public Sub Colorized_Keyboard_Click()
+    Keyboard_Map(cChar)
+End
+
+Public Sub Form_KeyRelease()
+
+  If Latihan_Container.Visible = True Then
+    If Type_Here.HasFocus = False Then
+      Type_Here.SetFocus
+      Type_Here_KeyPress
+    End If
+  Else
+    If board_ngetik.HasFocus = False Then
+      'board_ngetik.SetFocus
+      'board_ngetik_KeyPress
+    Endif
+  End If
+End
+
+Public Sub menu_mahir_Click()
+  Prepare_Advanced_Mode
+End
+
+Public Sub menu_latihan_Click()
+  If start_mahir_type Then
+    If Message.Question("Batalkan pengetikan?", "Ya", "Tidak") = 1 Then
+      stop_typing_button_Click
+      Prepare_Tutorial_Mode
+    Endif
+  Else
+    Prepare_Tutorial_Mode
+  Endif
+End
+
+Public Sub Prepare_Advanced_Mode()
+  menu_buka_file.Enabled = True
+  menu_recents.Enabled = True
+  menu_latihan.Enabled = True
+  menu_mahir.Enabled = False
+  
+  Mahir_Container.X = 0
+  Mahir_Container.y = 0
+  Mahir_Container.Visible = True
+  Latihan_Container.Visible = False
+  tLastTutorialIndex = List_Tutorial.Index
+  
+  Mahir_Container.ScrollBar = False
+  start_mahir_type = False
+  
+End
+
+Public Sub Prepare_Tutorial_Mode()
+  menu_buka_file.Enabled = False
+  menu_recents.Enabled = False
+  menu_latihan.Enabled = False
+  menu_mahir.Enabled = True
+  
+  Mahir_Container.Visible = False
+  Latihan_Container.Visible = True
+  
+  Latihan_Container.ScrollBar = False
+  List_Tutorial.Index = tLastTutorialIndex
+  List_Tutorial_Click
+  
+  If timer_speed.Enabled Then timer_speed.Enabled = False
+End
+
+Public Sub Opentutorial(Optional ifile As String = "")
+Dim tmpTeks As String
+
+  If ifile = "" Then
+    If tLastDir <> "" Then
+      Dialog.Path = tLastDir
+    Endif
+    Dialog.Title = "Pilih file tutorial..."
+    Dialog.Filter = ["*.txt", "File Teks"]
+    Dialog.OpenFile
+    tFilePath = Dialog.Path
+  Else
+    If Exist(ifile) Then 
+      tFilePath = ifile
+    Else
+      Message.Error("File " & tFilePath & " tidak ditemukan", "Ok")
+      tFilePath = ""
+    Endif
+  Endif
+  If (tFilePath <> "") And (Not IsDir(tFilePath)) Then
+    tLastDir = File.Dir(tFilePath)
+    tTeks_mahir = Trim(File.Load(tFilePath))
+    tmpTeks = tTeks_mahir
+    tTeks_mahir = Replace(tTeks_mahir, "<", "&#60 ")
+    tTeks_mahir = Replace(tTeks_mahir, ">", "&#62 ")
+    board_mahir.Text = tTeks_mahir
+    tTeks_mahir = tmpTeks
+    tmpTeks = ""
+    
+    Prepare_Board_Advanced
+    
+    info_char_count.Text = Format(Len(tTeks_mahir), "#,##")
+    
+    Manipulate_Array_Recents(tFilePath)
+    Tampilan_menu_recents
+  Endif
+End
+
+
+Public Sub menu_buka_file_Click()
+  Opentutorial
+End
+
+'membuat array agar file terakhir dibuka berada diposisi paling atas pada menu
+Public Sub Manipulate_Array_Recents(iTeks As String)
+  Dim iIndex As Integer
+    iIndex = RecentFiles.Find(iTeks)
+    If iIndex <> -1 Then
+      RecentFiles.Remove(iIndex)
+    Endif
+    RecentFiles.Reverse
+    RecentFiles.Add(tFilePath)
+    RecentFiles.Reverse
+    If RecentFiles.Count > 5 Then
+      RecentFiles.Pop
+    End If
+  
+End
+
+'menampilkan 5 file yang terakhir dibuka
+Public Sub Tampilan_menu_recents()
+  Dim i As Integer
+    For i = 0 To 4
+      RecentMenus[i].Visible = False
+    Next
+    
+    For i = 0 To RecentFiles.Count - 1
+      RecentMenus[i].Text = RecentFiles[i]
+      If RecentMenus[i].Visible = False Then RecentMenus[i].Visible = True
+    Next
+  
+End
+
+
+Public Sub SaveConfig()
+  Dim i As Integer
+  
+  'GLOBAL
+  If Latihan_Container.Visible = True Then
+    Settings["Global/mode"] = 0
+  Else If Mahir_Container.Visible = True Then
+    Settings["Global/mode"] = 1
+  Endif
+  
+  
+  'LATIHAN
+  If Colorized_Keyboard.Value = True Then
+    Settings["Latihan/KeyboardColour"] = 1
+  Else
+    Settings["Latihan/KeyboardColour"] = 0
+  Endif
+  
+  Settings["Latihan/LastTutorial"] = List_Tutorial.Index
+  
+  
+  'MAHIR
+  Settings["Mahir/LastDir"] = tLastDir
+
+  For i = 0 To RecentFiles.Count - 1
+      Settings["Mahir/RecentFile" & i] = RecentFiles[i]
+  Next
+  
+  
+End
+
+Public Sub LoadConfig()
+  Dim i As Integer
+  
+  If Exist(Settings.Path) Then
+    
+    'GLOBAL
+    If (Settings["Global/mode", User.Home] = 0) Or (Settings["Global/mode", User.Home] = 1) Then
+      If Settings["Global/mode", User.Home] = 0 Then
+        menu_latihan_Click
+      Else
+        menu_mahir_Click
+      Endif
+    Else
+      menu_latihan_Click
+    Endif
+    
+    
+    'LATIHAN
+    If (Settings["Latihan/KeyboardColour", User.Home] = 1) Or (Settings["Latihan/KeyboardColour", User.Home] = 0) Then
+      If Settings["Latihan/KeyboardColour", User.Home] = 1 Then
+        Colorized_Keyboard.Value = 1
+      Else
+        Colorized_Keyboard.Value = 0
+      Endif
+    Else
+      Colorized_Keyboard.Value = 1
+    Endif
+    Colorized_Keyboard_Click
+    
+    If List_Tutorial.Find(Settings["Latihan/LastTutorial"]) <> -1 Then
+      List_Tutorial.Index = Settings["Latihan/LastTutorial"]
+      List_Tutorial_Click
+    Else
+      List_Tutorial.Index = 0
+      List_Tutorial_Click
+    Endif
+    
+
+    'MAHIR
+    tLastDir = Settings["Mahir/LastDir", User.Home]
+    For i = 0 To 4
+      If Settings["Mahir/RecentFile" & i] <> "" Then
+        If Exist(Settings["Mahir/RecentFile" & i]) Then
+          RecentFiles.Add(Settings["Mahir/RecentFile" & i])
+        Endif
+      Endif
+    Next
+    Tampilan_menu_recents
+    
+  Endif
+    
+End
+
+Public Sub Recents_Click()
+  Opentutorial(Last.Text)
+End
+
+
+Public Sub Form_Close()
+  SaveConfig
+  If timer_speed.Enabled Then timer_speed.Enabled = False
+End
+
+
+Public Sub start_typing_button_Click()
+
+  If board_mahir.Text <> "" Then
+    start_mahir_type = True
+    
+    Prepare_Board_Advanced(tTeks_mahir)
+    info_next_char.Text = cChar
+    tWrong_Type_Count = 0
+    tChar_Typed_Count = 0
+    tWrong_Type = False
+    tTyping_Time = 0
+    tBoardPos = 0
+    tMark_as_Wrong = False
+    board_ngetik.Text = ""
+    info_char_typed.Text = "0%"
+    info_accuracy.Text = "0%"
+    info_error_count.Text = "0"
+    info_typing_speed.Text = "0"
+    
+    start_typing_button.Enabled = False
+    stop_typing_button.Enabled = True
+        
+    tStart_Time_Typing = Time(Now)
+    timer_speed.Enabled = True
+    
+    menu_buka_file.Enabled = False
+    menu_recents.Enabled = False
+  Else
+    Message.Info("Silahkan buka file teks untuk memulai pengetikan", "ok")
+  Endif
+
+End
+
+Public Sub Prepare_Board_Advanced(Optional tTeks As String)
+
+    With board_mahir
+      .SelectAll
+      .Format.Color = Color.Black
+      .Format.Font.Underline = False
+      .Format.Alignment = Align.Left
+      .Unselect
+      .Refresh
+    End With
+    
+  If tTeks <> "" Then
+    tChar_Pos = 1
+    cChar = Mid(tTeks, tChar_Pos, 1)
+  
+    With board_mahir
+      .Select(tChar_Pos - 1, 1)
+      .Format.Color = Color.Orange
+      .Format.Font.Underline = True
+      .Unselect
+    End With
+  Endif
+  
+  board_ngetik.SetFocus
+  
+End
+
+Public Sub stop_typing_button_Click()
+
+  start_mahir_type = False
+  start_typing_button.Enabled = True
+  stop_typing_button.Enabled = False
+  
+  timer_speed.Enabled = False
+  If tChar_Typed_Count <> 0 Then
+    info_typing_speed.Text = Format(tChar_Typed_Count / (tTyping_Time / 60), "#,##")
+  Endif
+
+  menu_buka_file.Enabled = True
+  menu_recents.Enabled = True
+End
+
+
+'thanks to enchufadoo for the thread
+'http://whiteislandsoftware.com/forum/index.php?page=topicview&id=g3-general%2Ftrying-to-detect-a-key
+Public Sub board_ngetik_KeyPress()
+      
+  If start_mahir_type Then
+      'antisipasi touhcpad laptop yang loncat-loncat saat pengetikan :(
+      board_ngetik.Pos = Len(board_ngetik.Text)
+      
+      If Not tWrong_Type Then
+          'blok beberapa key fungsi (misal : F1..F12, HOME, END dll)
+          If (tKeyFunction_arr.Find(Str(Key.Code)) <> -1) Then
+              Stop Event
+              Return
+          Endif
+          
+          'code code ascii dari Enter = 10
+          If Asc(cChar) = 10 Then 
+              cChar = Chr(13)
+          Endif
+          
+          If Asc(Key.Text) = Asc(cChar) Then
+              tChar_Pos = tChar_Pos + 1
+              tChar_Typed_Count = tChar_Typed_Count + 1
+              tBoardPos = tBoardPos + 1
+              If tChar_Pos > Len(tTeks_mahir) Then
+                  stop_typing_button_Click
+              Endif
+              
+              'jangan format board saat pertama kali ketik
+              If tChar_Typed_Count <> 0 Then
+                  'warnah huruf yang sedang diketik dengan orange
+                  With board_mahir
+                      .Select(tBoardPos, 1)
+                      .Format.Color = Color.Orange
+                      .Format.Font.Underline = True
+                      .Unselect
+                  End With
+                  
+                  If Not tMark_as_Wrong Then
+                      'tandai huruf yang telah diketik dengan abu-abu
+                      With board_mahir
+                          .Select(tBoardPos - 1, 1)
+                          .Format.Color = Color.gray
+                          .Format.Font.Underline = False
+                          .Unselect
+                      End With
+                  Else
+                      'tanda huruf yang pernah salah ketik dengan warna merah
+                      With board_mahir
+                          .Select(tBoardPos - 1, 1)
+                          .Format.Color = Color.Red
+                          .Format.Font.Underline = False
+                          .Unselect
+                      End With
+                  Endif
+              Endif
+              
+              tWrong_Type = False
+              tMark_as_Wrong = False
+          Else
+              tChar_Pos = tChar_Pos
+              tBoardPos = tBoardPos
+              'tombol shift yang terpencet untuk pengetikan huruf kapital tidak dicatat sebagai kesalahan
+                If Asc(Key.Text) <> 0 Then
+                    tWrong_Type = True
+                    info_wrong_type.Visible = True
+                    tWrong_Type_Count = tWrong_Type_Count + 1
+                Endif
+                info_error_count.Text = Format(tWrong_Type_Count, "#,##")
+          Endif
+      Else
+          'user harus tekan backspace kl salah ketik! :p
+          If Key.Code = Key.BackSpace Then
+            tWrong_Type = False
+            info_wrong_type.Visible = False
+            tMark_as_Wrong = True
+          Else
+            tWrong_Type = True
+            info_wrong_type.Visible = True
+            Stop Event
+          Endif
+      Endif
+
+      cChar = Mid(tTeks_mahir, tChar_Pos, 1)
+      Select Case Asc(cChar)
+        Case 10
+          info_next_char.Text = "↵"
+        Case 32
+          info_next_char.Text = "⎵"
+        Case Else
+          info_next_char.Text = cChar
+      End Select
+
+      info_char_typed.Text = Format((tChar_Typed_Count / Len(tTeks_mahir)), "###.# %")
+      info_accuracy.Text = Format(((tChar_Typed_Count - tWrong_Type_Count) / Len(tTeks_mahir)), "###.# %")
+      
+  Else
+    Message.Info("Klik tombol Mulai untuk memulai pengetikan ☺", "Sip")
+  Endif
+
+End
+
+Public Sub timer_speed_Timer()
+  tTyping_Time = tTyping_Time + 1
+End
+
+Public Sub menu_tentang_Click()
+
+    Info.Show
+
+End

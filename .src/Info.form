@@ -1,0 +1,25 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,60,56)
+  Text = ("Tentang Program")
+  Icon = Picture["typoo-icon.png"]
+  Resizable = False
+  { PictureBox1 PictureBox
+    MoveScaled(2,2,10,10)
+    Picture = Picture["typoo-icon.png"]
+  }
+  { Label1 Label
+    MoveScaled(13,1,46,5)
+    Font = Font["14"]
+    Text = ("Typoo 2.0.1 Jenni")
+  }
+  { Label2 Label
+    MoveScaled(12,4,49,8)
+    Text = (" Small software to learn fast typing\n Licensed under GNU General Public License Version 2")
+  }
+  { info_teks TextEdit
+    MoveScaled(2,14,56,39)
+    ReadOnly = True
+  }
+}

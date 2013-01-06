@@ -1,0 +1,24 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.3.4
+Title=typoo2
+Startup=Main
+Icon=typoo-icon.png
+Version=2.0.1
+Component=gb.image
+Component=gb.qt4
+Component=gb.form
+Component=gb.settings
+Component=gb.qt4.ext
+Description="Small software to learn fast typing"
+Authors="Project Founder : I Gede Kusuma Negara <archit3x@archlinux.us>\nProgrammer : Christian Kurniawan <saa7.go@gmail.com>\nArtwork Designer : Hamzah Fahrudin <karangdesaku@yahoo.co.id>"
+TabSize=4
+SourcePath=/media/DATA/Programming/Gambas
+Maintainer=Typoo Developer
+Address=archit3x@archlinux.us
+License=General Public License
+PackageName=typoo2-2.0.1
+Packager=1
+Systems=archlinux,autotools
+Menus=archlinux:"Applications/Education"
+Categories=archlinux:"Education"
+Groups=archlinux:"kde"

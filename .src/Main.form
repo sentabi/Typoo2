@@ -1,0 +1,587 @@
+# Gambas Form File 3.0
+
+{ Form Form
+  MoveScaled(0,0,120,80)
+  Text = ("Typoo 2.0.1 [BETA] - Aplikasi Belajar Ngetik 10 Jari")
+  Icon = Picture["typoo-icon.png"]
+  Resizable = False
+  Minimized = True
+  { menu_file Menu
+    Text = ("File")
+    { menu_buka_file Menu
+      Text = ("Buka File")
+      Picture = Picture["images/document-open.png"]
+      Enabled = False
+    }
+    { menu_recents Menu
+      Text = ("Terakhir dibuka")
+      Picture = Picture["images/document-properties.png"]
+      Enabled = False
+      { menu_recent1 Menu
+        Text = ("1")
+        Visible = False
+      }
+      { menu_recent2 Menu
+        Text = ("2")
+        Visible = False
+      }
+      { menu_recent3 Menu
+        Text = ("3")
+        Visible = False
+      }
+      { menu_recent4 Menu
+        Text = ("4")
+        Visible = False
+      }
+      { menu_recent5 Menu
+        Text = ("5")
+        Visible = False
+      }
+    }
+    { sp1 Menu
+    }
+    { menu_setting Menu
+      Text = ("Pengaturan")
+      Picture = Picture["images/preferences-desktop.png"]
+    }
+    { menu_exit Menu
+      Text = ("Keluar")
+      Picture = Picture["images/gtk-no.png"]
+    }
+  }
+  { menu_mode Menu
+    Text = ("Mode")
+    { menu_latihan Menu
+      Text = ("Latihan")
+      Enabled = False
+    }
+    { menu_mahir Menu
+      Text = ("Mahir")
+    }
+  }
+  { menu_about Menu
+    Text = ("Info")
+    { menu_tentang Menu
+      Text = ("Tentang Program")
+      Picture = Picture["images/help-about.png"]
+    }
+  }
+  { Main_Container ScrollView
+    MoveScaled(2,0,115,71)
+    { Latihan_Container ScrollView
+      MoveScaled(0,0,101,66)
+      Border = False
+      ScrollBar = Scroll.None
+      { Type_Here TextBox
+        MoveScaled(1,51,17,4)
+        ReadOnly = True
+      }
+      { Board TextEdit
+        MoveScaled(23,0,76.7143,12.5714)
+        Font = Font["14"]
+        ReadOnly = True
+        ScrollBar = Scroll.Vertical
+      }
+      { List_Tutorial ListBox
+        MoveScaled(0,3,19,54)
+        NoTabFocus = True
+      }
+      { Label1 Label
+        MoveScaled(5,0,9,3)
+        Font = Font["Bold"]
+        Text = ("LATIHAN")
+      }
+      { Keyboard_Container ScrollView
+        MoveScaled(23,13,76.7143,28)
+        NoTabFocus = True
+        { b1 Button
+          MoveScaled(1,1,4.8571,4.8571)
+          Tag = "1"
+          Text = ("~\n`")
+        }
+        { b2 Button
+          MoveScaled(6,1,4.8571,4.8571)
+          Text = ("!\n1")
+        }
+        { b3 Button
+          MoveScaled(11,1,4.8571,4.8571)
+          Text = ("@\n2")
+        }
+        { b4 Button
+          MoveScaled(16,1,4.8571,4.8571)
+          Text = ("#\n3")
+        }
+        { b5 Button
+          MoveScaled(21,1,4.8571,4.8571)
+          Text = ("$\n4")
+        }
+        { b6 Button
+          MoveScaled(26,1,4.8571,4.8571)
+          Text = ("%\n5")
+        }
+        { b7 Button
+          MoveScaled(31,1,4.8571,4.8571)
+          Text = ("^\n6")
+        }
+        { b8 Button
+          MoveScaled(36,1,4.8571,4.8571)
+          Text = ("&&\n7")
+        }
+        { b10 Button
+          MoveScaled(46,1,4.8571,4.8571)
+          Text = ("(\n9")
+        }
+        { b11 Button
+          MoveScaled(51,1,4.8571,4.8571)
+          Text = (")\n0")
+        }
+        { b12 Button
+          MoveScaled(56,1,4.8571,4.8571)
+          Text = ("_\n-")
+        }
+        { b13 Button
+          MoveScaled(61,1,4.8571,4.8571)
+          Text = ("+\n=")
+        }
+        { b14 Button
+          MoveScaled(66,1,9,4.8571)
+          Text = ("Bksp")
+        }
+        { b16 Button
+          MoveScaled(8,6,4.8571,4.8571)
+          Text = ("Q")
+        }
+        { b17 Button
+          MoveScaled(13,6,4.8571,4.8571)
+          Text = ("W")
+        }
+        { b18 Button
+          MoveScaled(18,6,4.8571,4.8571)
+          Text = ("E")
+        }
+        { b19 Button
+          MoveScaled(23,6,4.8571,4.8571)
+          Text = ("R")
+        }
+        { b20 Button
+          MoveScaled(28,6,4.8571,4.8571)
+          Text = ("T")
+        }
+        { b21 Button
+          MoveScaled(33,6,4.8571,4.8571)
+          Text = ("Y")
+        }
+        { b22 Button
+          MoveScaled(38,6,4.8571,4.8571)
+          Text = ("U")
+        }
+        { b23 Button
+          MoveScaled(43,6,4.8571,4.8571)
+          Text = ("I")
+        }
+        { b24 Button
+          MoveScaled(48,6,4.8571,4.8571)
+          Text = ("O")
+        }
+        { b25 Button
+          MoveScaled(53,6,4.8571,4.8571)
+          Text = ("P")
+        }
+        { b15 Button
+          MoveScaled(1,6,6.8571,4.8571)
+          Text = ("Tab")
+        }
+        { b26 Button
+          MoveScaled(58,6,4.8571,4.8571)
+          Text = ("{\n[")
+        }
+        { b27 Button
+          MoveScaled(63,6,4.8571,4.8571)
+          Text = ("}\n]")
+        }
+        { b28 Button
+          MoveScaled(68,6,6.8571,4.8571)
+          Text = ("|\n\\")
+        }
+        { b30 Button
+          MoveScaled(10,11,4.8571,4.8571)
+          Text = ("A")
+        }
+        { b31 Button
+          MoveScaled(15,11,4.8571,4.8571)
+          Text = ("S")
+        }
+        { b32 Button
+          MoveScaled(20,11,4.8571,4.8571)
+          Text = ("D")
+        }
+        { b33 Button
+          MoveScaled(25,11,4.8571,4.8571)
+          Text = ("F")
+        }
+        { b34 Button
+          MoveScaled(30,11,4.8571,4.8571)
+          Text = ("G")
+        }
+        { b35 Button
+          MoveScaled(35,11,4.8571,4.8571)
+          Text = ("H")
+        }
+        { b36 Button
+          MoveScaled(40,11,4.8571,4.8571)
+          Text = ("J")
+        }
+        { b37 Button
+          MoveScaled(45,11,4.8571,4.8571)
+          Text = ("K")
+        }
+        { b38 Button
+          MoveScaled(50,11,4.8571,4.8571)
+          Text = ("L")
+        }
+        { b43 Button
+          MoveScaled(13,16,4.8571,4.8571)
+          Text = ("Z")
+        }
+        { b44 Button
+          MoveScaled(18,16,4.8571,4.8571)
+          Text = ("X")
+        }
+        { b45 Button
+          MoveScaled(23,16,4.8571,4.8571)
+          Text = ("C")
+        }
+        { b46 Button
+          MoveScaled(28,16,4.8571,4.8571)
+          Text = ("V")
+        }
+        { b47 Button
+          MoveScaled(33,16,4.8571,4.8571)
+          Text = ("B")
+        }
+        { b48 Button
+          MoveScaled(38,16,4.8571,4.8571)
+          Text = ("N")
+        }
+        { b49 Button
+          MoveScaled(43,16,4.8571,4.8571)
+          Text = ("M")
+        }
+        { b39 Button
+          MoveScaled(55,11,4.8571,4.8571)
+          Text = (":\n;")
+        }
+        { b40 Button
+          MoveScaled(60,11,4.8571,4.8571)
+          Text = ("\"\n'")
+        }
+        { b41 Button
+          MoveScaled(65,11,9.7143,4.8571)
+          Text = ("Enter")
+        }
+        { b29 Button
+          MoveScaled(1,11,8.8571,4.8571)
+          Text = ("Caps")
+        }
+        { b50 Button
+          MoveScaled(48,16,4.8571,4.8571)
+          Text = ("<\n,")
+        }
+        { b51 Button
+          MoveScaled(53,16,4.8571,4.8571)
+          Text = (">\n.")
+        }
+        { b52 Button
+          MoveScaled(58,16,4.8571,4.8571)
+          Text = ("?\n/")
+        }
+        { b42 Button
+          MoveScaled(1,16,11.8571,4.8571)
+          Text = ("Shift")
+        }
+        { b53 Button
+          MoveScaled(63,16,11.7143,4.8571)
+          Text = ("Shift")
+        }
+        { b54 Button
+          MoveScaled(1,21,4.8571,4.8571)
+          Text = ("Ctrl")
+        }
+        { b56 Button
+          MoveScaled(11,21,4.8571,4.8571)
+          Text = ("Alt")
+        }
+        { b58 Button
+          MoveScaled(58,21,4.8571,4.8571)
+          Text = ("Alt")
+        }
+        { b59 Button
+          MoveScaled(63,21,4.8571,4.8571)
+          Picture = Picture["tux-icon.png"]
+        }
+        { b60 Button
+          MoveScaled(68,21,6.5714,4.8571)
+          Text = ("Ctrl")
+        }
+        { b57 Button
+          MoveScaled(16,21,41.7143,4.8571)
+          Text = ("Space")
+        }
+        { b9 Button
+          MoveScaled(41,1,4.8571,4.8571)
+          Text = ("*\n8")
+        }
+        { b55 Button
+          MoveScaled(6,21,4.8571,4.8571)
+          Picture = Picture["tux-icon.png"]
+        }
+      }
+      { Hand_Container ScrollView
+        MoveScaled(28.8571,39,66,26)
+        ScrollBar = Scroll.None
+        { pic_tangan PictureBox
+          MoveScaled(1,-1,60,27)
+          Picture = Picture["images/tangan.png"]
+          AutoResize = True
+        }
+        { l5 PictureBox
+          MoveScaled(22.2857,12.1429,8,13)
+          Picture = Picture["images/jempol-kiri.png"]
+        }
+        { r1 PictureBox
+          MoveScaled(32,12.5714,8,13)
+          Picture = Picture["images/jempol-kanan.png"]
+        }
+        { r5 PictureBox
+          MoveScaled(54,8.2857,6,17)
+          Picture = Picture["images/kelingking-kanan.png"]
+        }
+        { l1 PictureBox
+          MoveScaled(1.5714,8,9,17)
+          Picture = Picture["images/kelingking-kiri.png"]
+        }
+        { r4 PictureBox
+          MoveScaled(49.1429,1.7143,7,18)
+          Picture = Picture["images/manis-kanan.png"]
+        }
+        { l2 PictureBox
+          MoveScaled(6.5714,2.1429,6,17)
+          Picture = Picture["images/manis-kiri.png"]
+        }
+        { r2 PictureBox
+          MoveScaled(39.2857,1,7,21)
+          Picture = Picture["images/telunjuk-kanan.png"]
+        }
+        { l4 PictureBox
+          MoveScaled(16.2857,1,6,21)
+          Picture = Picture["images/telunjuk-kiri.png"]
+        }
+        { r3 PictureBox
+          MoveScaled(45.4286,-1,7,18)
+          Picture = Picture["images/tengah-kanan.png"]
+        }
+        { l3 PictureBox
+          MoveScaled(10,-1,7,18)
+          Picture = Picture["images/tengah-kiri.png"]
+        }
+        { t1 Label
+          MoveScaled(3,13,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &HFFFF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t2 Label
+          MoveScaled(6,8,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &H7FFF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t3 Label
+          MoveScaled(11,5,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &HFFBF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t4 Label
+          MoveScaled(16,8,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &H7FBFFF&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t5 Label
+          MoveScaled(31,17,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &HBF2F31&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t9 Label
+          MoveScaled(55,13,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &HFFFF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t8 Label
+          MoveScaled(52,8,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &H7FFF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t7 Label
+          MoveScaled(48,5,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &HFFBF7F&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+        { t6 Label
+          MoveScaled(42,8,3.5714,3.5714)
+          Font = Font["13"]
+          Background = &H7FBFFF&
+          AutoResize = True
+          Text = ("a")
+          Alignment = Align.Center
+          Border = Border.Plain
+        }
+      }
+      { Colorized_Keyboard CheckBox
+        MoveScaled(0,58,18,3)
+        Text = ("Warnai Keyboard")
+        Value = CheckBox.True
+      }
+    }
+    { Mahir_Container ScrollView
+      MoveScaled(102,0,101,65)
+      Border = False
+      { board_mahir TextEdit
+        MoveScaled(25,2,75,40)
+        Font = Font["13"]
+        ReadOnly = True
+        Wrap = True
+        ScrollBar = Scroll.Vertical
+      }
+      { board_ngetik TextEdit
+        MoveScaled(25,46,75,11)
+        Font = Font["12"]
+        Wrap = True
+        ScrollBar = Scroll.Vertical
+      }
+      { frame_huruf_berikutnya Frame
+        MoveScaled(0,1,23,23)
+        Text = ("Huruf Berikutnya")
+        { info_next_char Label
+          MoveScaled(1,2,21,20)
+          Font = Font["72"]
+          Alignment = Align.Center
+        }
+      }
+      { frame_huruf_berikutnya3 Frame
+        MoveScaled(0,25,23,15)
+        Text = (" Kecepatan ")
+        { info_typing_speed Label
+          MoveScaled(2,3,19,8)
+          Font = Font["36"]
+          Text = ("0")
+          Alignment = Align.Center
+        }
+        { Label7 Label
+          MoveScaled(5,12,14,2)
+          Text = ("Huruf per Menit")
+        }
+      }
+      { start_typing_button Button
+        MoveScaled(3,46,7.1429,7)
+        ToolTip = ("Mulai Mengetik")
+        Picture = Picture["images/tombol-mulai.png"]
+        Border = False
+      }
+      { stop_typing_button Button
+        MoveScaled(12,46,7.1429,7)
+        Enabled = False
+        ToolTip = ("Berhenti Mengetik")
+        Picture = Picture["images/tombol-berhenti.png"]
+        Border = False
+      }
+      { Label3 Label
+        MoveScaled(2,60.7143,12,2)
+        Text = ("Jumlah Huruf :")
+      }
+      { Separator1 Separator
+        MoveScaled(1,59,98,1)
+      }
+      { info_char_count TextLabel
+        MoveScaled(15,60.1429,10,3)
+        Text = ("0")
+        Alignment = Align.Left
+      }
+      { Label5 Label
+        MoveScaled(49,60.7143,17,2)
+        Text = ("Jumlah Kesalahan :")
+      }
+      { info_error_count TextLabel
+        MoveScaled(66,60.1429,10,3)
+        Text = ("0")
+        Alignment = Align.Left
+      }
+      { Label9 Label
+        MoveScaled(78,60.7143,11,2)
+        Text = ("Keakuratan :")
+      }
+      { info_accuracy TextLabel
+        MoveScaled(89.5714,60.1429,7,3)
+        Text = ("0%")
+        Alignment = Align.Left
+      }
+      { Label4 Label
+        MoveScaled(27,60.7143,13,2)
+        Text = ("Terselesaikan :")
+      }
+      { info_char_typed TextLabel
+        MoveScaled(40,60.1429,7,3)
+        Text = ("0%")
+        Alignment = Align.Left
+      }
+      { Label2 Label
+        MoveScaled(25,0,34,2)
+        Text = ("Buka file teks dan ketik teks berikut ini :")
+      }
+      { Label6 Label
+        MoveScaled(25,44,34,2)
+        Text = ("Ketik disini")
+      }
+      { timer_speed #Timer
+        #MoveScaled(14,29)
+      }
+      { info_wrong_type Label
+        MoveScaled(65,43,35,3)
+        Visible = False
+        Font = Font["13"]
+        Foreground = &HFF0000&
+        AutoResize = True
+        Text = ("Salah Ketik..! Tekan Backspace.")
+      }
+    }
+  }
+}

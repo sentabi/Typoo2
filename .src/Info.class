@@ -1,0 +1,66 @@
+' Gambas class file
+
+' Typoo 2.0.1 [Code Name : Jenni] ----------------------------------------------------------
+' Small software to learn fast typing
+' Licensed under GPL GNU General Public License Version 2
+' (c) 2011 - 2013 I Gede Kusuma Negara
+'
+' Developers: 
+' * Project Founder : I Gede Kusuma Negara <archit3x@archlinux.us>
+' * Programmer : Christian Kurniawan Ginting <saa7.go@gmail.com>
+' * Artwork Designer : Hamzah Fahrudin <karangdesaku@yahoo.co.id>
+' Coded on Gambas 3.34 in Archlinux 32 bit
+' 
+' We hope this software can be usefull and let's increase your typing speed..!
+' 
+' 
+' Thanks to:
+' * GAMBAS Developers
+' * Teman-teman komunitas ubuntu-indonesia.com (#ubuntu-indonesia@freenode)
+' * Teman-teman komunitas Blankon terutama pak de Gus Pur atas semangatnya ;)
+' * Teman-teman forum linux kaskus.co.id
+' ------------------------------------------------------------------------------------------
+
+ 
+ 
+Public Sub Form_Open()
+
+    Me.Center
+    Me.ShowModal
+
+End
+
+Public Sub Form_Show()
+Dim about_info As String
+    
+    about_info = "Typoo 2.0.1 [Code Name: Jenni]" & gb.CrLf & 
+                 "Small Software to Learn Fast Typing" & gb.CrLf & 
+                 "Licensed under GNU General Public License Version 2" & gb.CrLf & 
+                 "(c) 2011, 2013 I Gede Kusuma Negara" & gb.CrLf & 
+                 " " & gb.CrLf & 
+                 "Project Founder:" & gb.CrLf & 
+                 "I Gede Kusuma Negara" & gb.CrLf &
+                 "<archit3x@archlinux.us> " & gb.CrLf &
+                 "" & gb.CrLf &
+                 "Programmer:" & gb.CrLf &
+                 "Christian Kurniawan Ginting" & gb.CrLf &
+                 "<saa7.go@gmail.com>" & gb.CrLf & 
+                 "" & gb.CrLf &
+                 "Artwork Designer:" & gb.CrLf & 
+                 "Hamzah Fahrudin" & gb.CrLf &
+                 "<karangdesaku@yahoo.co.id>" & gb.CrLf &
+                 " " & gb.CrLf & 
+                 "We hope this software can be usefull." & gb.CrLf & 
+                 "Let 's increase your typing speed..!" & gb.CrLf & 
+                 " " & gb.CrLf & 
+                 "Thanks to:" & gb.CrLf & 
+                 "1.Gambas Developers" & gb.CrLf &
+                 "2.Komunitas (#ubuntu-indonesia@freenode)" & gb.CrLf & 
+                 "3.Komunitas Blankon terutama pak de Gus Pur ;)" & gb.CrLf & 
+                 "4.Komunitas Linux kaskus.co.id" & gb.CrLf & 
+                 "5.Semua orang yang menggunakan software ini" & gb.CrLf & 
+                 ""
+    
+    info_teks.Text = about_info
+    
+End
