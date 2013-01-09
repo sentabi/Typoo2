@@ -1,6 +1,6 @@
 # Gambas Project File 3.0
 # Compiled with Gambas 3.3.4
-Title=typoo2
+Title=Typoo2
 Startup=Main
 Icon=typoo-icon.png
 Version=2.0.1
@@ -15,10 +15,15 @@ TabSize=4
 SourcePath=/media/DATA/Programming/Gambas
 Maintainer=Typoo Developer
 Address=archit3x@archlinux.us
+Url=https://github.com/archit3x/Typoo2
 License=General Public License
 PackageName=typoo2-2.0.1
+CreateEachDirectory=1
 Packager=1
-Systems=archlinux,autotools
+Systems=archlinux,autotools,slackware
 Menus=archlinux:"Applications/Education"
 Categories=archlinux:"Education"
 Groups=archlinux:"kde"
+Menus=slackware:"Education/Teaching"
+Categories=slackware:"Education"
+Groups=slackware:"Applications"

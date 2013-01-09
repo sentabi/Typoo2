@@ -1,3 +1,6 @@
+2.0.1 [9-1-2013] ----------------------------------------------
+- Perbaikan bug pada menu close
+
 2.0.1 [2013]---------------------------------------------------
 - Porting ke Gambas 3
 - Menulis ulang code dan Optimasi code

@@ -26,10 +26,10 @@ Geometry=[946,88,343,476]
 Geometry=[923,132,276,494]
 
 [OpenFile]
-Active=1
 File[1]=".src/Main.form"
 File[2]=".src/Main.class:3.37"
 File[3]="CHANGELOG:8.38"
+Active=4
 File[4]=".src/Info.class:27.13"
 File[5]=".src/Info.form"
 Count=5

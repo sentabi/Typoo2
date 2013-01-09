@@ -43,6 +43,7 @@
     { menu_setting Menu
       Text = ("Pengaturan")
       Picture = Picture["images/preferences-desktop.png"]
+      Enabled = False
     }
     { menu_exit Menu
       Text = ("Keluar")

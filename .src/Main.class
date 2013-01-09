@@ -903,3 +903,9 @@ Public Sub menu_tentang_Click()
     Info.Show
 
 End
+
+Public Sub menu_exit_Click()
+
+    Me.Close
+
+End

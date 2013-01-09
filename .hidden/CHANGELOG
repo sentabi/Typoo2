@@ -1,3 +1,12 @@
-* Tue Jan 01 2013 Typoo Developer <archit3x@archlinux.us> 2.0.1
-- Initial release
+* Mon Jan 07 2013 Typoo Developer <archit3x@archlinux.us> 2.0.1
+
+- 2.0.1 [2013]---------------------------------------------------
+- Porting ke Gambas 3
+- Menulis ulang code dan Optimasi code
+- Desain ulang tampilan
+- Mendukung pengetikan dengan ENTER
+- Improvisasi Tutorial yang lebih baik
+
+- 1.0 [2011]-----------------------------------------------------
+- Rilis Perdana dibuat dengan Gambas 2
 
