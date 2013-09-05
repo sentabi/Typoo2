@@ -85,6 +85,7 @@ Public Sub Form_Open()
   Me.Height = 469
   Me.Width = 721
   Main_Container.Width = 707
+  Me.Center
   'Type_Here.SetFocus
   'h:469
   'w:721  :707
@@ -907,5 +908,11 @@ End
 Public Sub menu_exit_Click()
 
     Me.Close
+
+End
+
+Public Sub Latihan_Container_MouseDown()
+
+    
 
 End
